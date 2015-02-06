@@ -1,4 +1,4 @@
-android_device_acer_a200
+IconiaHD device_acer_a200
 ========================
 
 Branch 'omni-4.4' is designed for Omnirom repository KitKat 4.4.4 
