@@ -18,31 +18,53 @@
 USE_CAMERA_STUB := false
 
 # Platform
+TARGET_NO_RADIOIMAGE := true
 TARGET_BOARD_PLATFORM := tegra
 TARGET_TEGRA_VERSION := t20
+TARGET_BOOTLOADER_BOARD_NAME := picasso_e
+
+TARGET_NO_RADIOIMAGE := true
+
+TARGET_NO_BOOTLOADER := true
 TARGET_CPU_ABI := armeabi-v7a
 TARGET_CPU_ABI2 := armeabi
 TARGET_ARCH_VARIANT := armv7-a
 TARGET_CPU_VARIANT := generic
-TARGET_ARCH_VARIANT_CPU := cortex-a9
-TARGET_ARCH_VARIANT_FPU := vfpv3-d16
-TARGET_ARCH := arm
 TARGET_CPU_SMP := true
+TARGET_ARCH := arm
+# Change to test tf101 config
+#TARGET_ARCH_VARIANT_CPU := cortex-a9
 
-ARCH_ARM_USE_NON_NEON_MEMCPY := true
-ARCH_ARM_HIGH_OPTIMIZATION := true
+TARGET_ARCH_VARIANT_FPU := vfpv3-d16
 ARCH_ARM_HAVE_TLS_REGISTER := true
 
-TARGET_NO_BOOTLOADER := true
-TARGET_BOOTLOADER_BOARD_NAME := picasso_e
+# Change to test tf101 config
+#ARCH_ARM_USE_NON_NEON_MEMCPY := true
+
+ARCH_ARM_HIGH_OPTIMIZATION := true
+
+<!-- Treat the on screen buttons as hardware keys?
+     suppressed for Lollipop
+    <integer name="config_deviceHardwareKeys">7</integer>  -->
+# Change to test tf101 config
 TARGET_OTA_ASSERT_DEVICE := picasso_e,a200
-USE_ALL_OPTIMIZED_STRING_FUNCS := true
+# Change to test tf101 config
+#USE_ALL_OPTIMIZED_STRING_FUNCS := true
+
 
 # kernel
-#TARGET_KERNEL_CUSTOM_TOOLCHAIN := arm-eabi-4.6
-#TARGET_KERNEL_SOURCE := kernel/acer/a200
-#TARGET_KERNEL_CONFIG := jellyplay_picasso_e_defconfig
+TARGET_KERNEL_CUSTOM_TOOLCHAIN := arm-eabi-4.8
+TARGET_KERNEL_SOURCE := kernel/acer/a200
+
+# Use this config for 'full' kernel
+# TARGET_KERNEL_CONFIG := iconiahd_picasso_e_defconfig
+
+# Use this config for 'light' kernel, usable for recovery
+#TARGET_KERNEL_CONFIG := iconiahd_picasso_e_recovery_defconfig
+
+# Use prebuilt for first tests with Lollipop
 TARGET_PREBUILT_KERNEL := device/acer/a200/prebuilt/zImage
+
 BOARD_KERNEL_CMDLINE :=
 BOARD_KERNEL_BASE := 0x10000000
 BOARD_PAGE_SIZE := 0x00000800
@@ -50,13 +72,16 @@ BOARD_PAGE_SIZE := 0x00000800
 # Recovery
 #TARGET_RECOVERY_KERNEL := device/acer/a200/recovery/recovery_kernel
 #TARGET_RECOVERY_FSTAB := device/acer/a200/recovery/recovery.fstab
-TARGET_RECOVERY_FSTAB := device/acer/a200/ramdisk/fstab.picasso
-#RECOVERY_FSTAB_VERSION := 2
-TARGET_PREBUILT_RECOVERY_KERNEL := device/acer/a200/recovery/kernel
+TARGET_RECOVERY_FSTAB := device/acer/a200/ramdisk/fstab.picasso_e
+RECOVERY_FSTAB_VERSION := 2
+# The following pseudo_kernel is'nt a true kernel : It's only a file
+# such small to let the make build a recovery without error (filesystem too large)
+TARGET_PREBUILT_RECOVERY_KERNEL := device/acer/a200/recovery/pseudo_kernel
 
 # TWRP Settings
 DEVICE_RESOLUTION := 1280x800
 RECOVERY_SDCARD_ON_DATA := true
+
 TW_INTERNAL_STORAGE_PATH := "/data/media"
 TW_INTERNAL_STORAGE_MOUNT_POINT := "data"
 TW_EXTERNAL_STORAGE_PATH := "/sdcard1"
@@ -72,7 +97,6 @@ TW_CRYPTO_MNT_POINT := "/data"
 TW_CRYPTO_FS_OPTIONS := "data=ordered,delalloc"
 TW_CRYPTO_FS_FLAGS := "0x00000406"
 TW_CRYPTO_KEY_LOC := "footer"
-#TWRP_CUSTOM_KEYBOARD := ../../../device/asus/tf101/recovery/hardwarekeyboard.cpp
 
 
 
@@ -86,7 +110,7 @@ BOARD_HAS_NO_SELECT_BUTTON := true
 
 # Display
 USE_OPENGL_RENDERER    := true
-#BOARD_EGL_CFG          := device/acer/a200/prebuilt/etc/egl.cfg
+BOARD_EGL_CFG          := device/acer/a200/prebuilt/etc/egl.cfg
 BOARD_NO_ALLOW_DEQUEUE_CURRENT_BUFFER := true
 BOARD_USE_SKIA_LCDTEXT := true
 BOARD_USES_HGL := true
@@ -98,8 +122,12 @@ SKIP_SET_METADATA := true
 BOARD_USE_MHEAP_SCREENSHOT := true
 BOARD_USES_HWCOMPOSER := true
 BOARD_NEEDS_OLD_HWC_API := true
-
-
+BOARD_EGL_SKIP_FIRST_DEQUEUE := true
+BOARD_EGL_NEEDS_FNW:= true
+ENABLE_WEBGL := true
+NUM_FRAMEBUFFER_SURFACE_BUFFERS := 3
+BOARD_NEED_OMX_COMPAT := true
+BOARD_USES_PROPRIETARY_OMX := TF101
 
 # Audio
 #TARGET_PROVIDES_LIBAUDIO := true
@@ -131,9 +159,9 @@ BOARD_HOSTAPD_PRIVATE_LIB        := lib_driver_cmd_bcmdhd
 BOARD_WLAN_DEVICE                := bcmdhd
 WIFI_DRIVER_FW_PATH_PARAM        := "/sys/module/bcmdhd/parameters/firmware_path"
 WIFI_DRIVER_FW_PATH_STA          := "/system/vendor/firmware/fw_bcmdhd.bin"
-#WIFI_DRIVER_FW_PATH_P2P          := "/system/vendor/firmware/fw_bcmdhd_p2p.bin"
+WIFI_DRIVER_FW_PATH_P2P          := "/system/vendor/firmware/fw_bcmdhd_p2p.bin"
 WIFI_DRIVER_FW_PATH_AP           := "/system/vendor/firmware/fw_bcmdhd_apsta.bin"
-WIFI_DRIVER_MODULE_ARG           := "firmware_path=/system/vendor/firmware/fw_bcmdhd.bin nvram_path=/system/vendor/firmware/bcmdhd.cal iface_name=wlan0"
+#WIFI_DRIVER_MODULE_ARG           := "firmware_path=/system/vendor/firmware/fw_bcmdhd.bin nvram_path=/system/vendor/firmware/bcmdhd.cal iface_name=wlan0"
 
 # Misc flags
 COMMON_GLOBAL_CFLAGS += -DNEEDS_VECTORIMPL_SYMBOLS
@@ -149,4 +177,6 @@ BOARD_SYSTEMIMAGE_PARTITION_SIZE    := 367001600
 BOARD_USERDATAIMAGE_PARTITION_SIZE  := 13864271872
 BOARD_FLASH_BLOCK_SIZE              := 131072
 
+# SELinux policies
+POLICYVERS   := 24
 
