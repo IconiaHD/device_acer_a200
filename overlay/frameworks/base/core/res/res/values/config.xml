@@ -36,7 +36,8 @@
     <bool name="config_allowAllRotations">true</bool>
 
   <!-- Device has a h/w rotation lock switch -->
-    <bool name="config_hasRotationLockSwitch">true</bool>
+   <!-- for lollipop : set to false, because resource not found 
+    <bool name="config_hasRotationLockSwitch">false</bool> -->
 
  <!-- Enable lockscreen rotation -->
     <bool name="config_enableLockScreenRotation">true</bool>
@@ -199,8 +200,9 @@
    <!--  Maximum number of supported users -->
     <integer name="config_multiuserMaximumUsers">8</integer>
 
-   <!-- Treat the on screen buttons as hardware keys? -->
-    <integer name="config_deviceHardwareKeys">7</integer>
+   <!-- Treat the on screen buttons as hardware keys?
+     suppressed for Lollipop
+    <integer name="config_deviceHardwareKeys">7</integer>  -->
 
    <!-- Package name(s) containing location provider support -->
     <string-array name="config_locationProviderPackageNames" translatable="false">
