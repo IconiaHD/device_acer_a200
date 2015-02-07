@@ -43,15 +43,8 @@ ARCH_ARM_HAVE_TLS_REGISTER := true
 
 ARCH_ARM_HIGH_OPTIMIZATION := true
 
-<!-- Treat the on screen buttons as hardware keys -->
-     <!-- suppressed for Lollipop 
-    <integer name="config_deviceHardwareKeys">7</integer>  -->
-    
 # Change to test tf101 config
 TARGET_OTA_ASSERT_DEVICE := picasso_e,a200
-# Change to test tf101 config
-#USE_ALL_OPTIMIZED_STRING_FUNCS := true
-
 
 # kernel
 TARGET_KERNEL_CUSTOM_TOOLCHAIN := arm-eabi-4.8
