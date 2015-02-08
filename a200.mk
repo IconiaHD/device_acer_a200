@@ -20,11 +20,16 @@ DEVICE_PACKAGE_OVERLAYS += $(LOCAL_PATH)/overlay
 PRODUCT_COPY_FILES += \
     $(LOCAL_PATH)/prebuilt/zImage:kernel
 
+# Set wifi-only before it's set by generic_no_telephony.mk
+PRODUCT_PROPERTY_OVERRIDES += \
+    ro.carrier=wifi-only
+
 # inherit proprietary files
 $(call inherit-product-if-exists, vendor/acer/a200/a200-vendor.mk)
 $(call inherit-product, $(SRC_TARGET_DIR)/product/languages_full.mk)
 $(call inherit-product, build/target/product/full_base.mk)
 $(call inherit-product-if-exists, framework/base/data/videos/VideoPackage2.mk)
+
 
 WIFI_BAND := 802_11_ABG
 $(call inherit-product-if-exists, hardware/broadcom/wlan/bcmdhd/firmware/bcm4329/device-bcm.mk)
@@ -35,7 +40,6 @@ PRODUCT_PACKAGES += \
     audio.a2dp.default \
     audio.usb.default \
     audio.primary.picasso_e \
-    hwcomposer.tegra \
     power.picasso_e \
     libaudioutils \
     libtinyalsa \
@@ -64,6 +68,7 @@ PRODUCT_COPY_FILES += \
     $(LOCAL_PATH)/prebuilt/etc/bcmdhd.cal:system/vendor/firmware/bcmdhd.cal \
     $(LOCAL_PATH)/prebuilt/vendor/firmware/fw_bcmdhd_p2p.bin:system/vendor/firmware/fw_bcmdhd_p2p.bin \
     $(LOCAL_PATH)/bluetooth/bt_vendor.conf:system/etc/bluetooth/bt_vendor.conf \
+    $(LOCAL_PATH)/prebuilt/bin/gps-update:system/bin/gps-update
 
 # hw permissions
 PRODUCT_COPY_FILES += \
@@ -90,15 +95,18 @@ PRODUCT_COPY_FILES += \
     $(LOCAL_PATH)/prebuilt/etc/audio_effects.conf:system/etc/audio_effects.conf \
     $(LOCAL_PATH)/prebuilt/etc/audio_policy.conf:system/etc/audio_policy.conf \
     $(LOCAL_PATH)/prebuilt/etc/gpsconfig.xml:system/etc/gps/gpsconfig.xml \
-    $(LOCAL_PATH)/prebuilt/bin/wpa_supplicant:system/bin/wpa_supplicant \
-    $(LOCAL_PATH)/prebuilt/etc/wifi/wpa_supplicant.conf:system/etc/wifi/wpa_supplicant.conf \
-    $(LOCAL_PATH)/prebuilt/etc/wifi/wpa_supplicant_overlay.conf:system/etc/wifi/wpa_supplicant_overlay.conf \
-    $(LOCAL_PATH)/prebuilt/etc/wifi/p2p_supplicant_overlay.conf:system/etc/wifi/p2p_supplicant_overlay.conf \
     $(LOCAL_PATH)/prebuilt/etc/gps.conf:system/etc/gps.conf \
     $(LOCAL_PATH)/prebuilt/etc/nvcamera.conf:system/etc/nvcamera.conf \
     $(LOCAL_PATH)/prebuilt/etc/media_codecs.xml:system/etc/media_codecs.xml \
     $(LOCAL_PATH)/prebuilt/data/srs_processing.cfg:system/data/srs_processing.cfg \
     $(LOCAL_PATH)/prebuilt/etc/mixer_paths.xml:system/etc/mixer_paths.xml
+
+# Fix Wifi problems
+PRODUCT_COPY_FILES += \
+    $(LOCAL_PATH)/prebuilt/bin/wpa_supplicant:system/bin/wpa_supplicant \
+    $(LOCAL_PATH)/prebuilt/etc/wifi/wpa_supplicant.conf:system/etc/wifi/wpa_supplicant.conf \
+    $(LOCAL_PATH)/prebuilt/etc/wifi/wpa_supplicant_overlay.conf:system/etc/wifi/wpa_supplicant_overlay.conf \
+    $(LOCAL_PATH)/prebuilt/etc/wifi/p2p_supplicant_overlay.conf:system/etc/wifi/p2p_supplicant_overlay.conf 
 
 # keychars/layout
 PRODUCT_COPY_FILES += \
@@ -151,9 +159,8 @@ ADDITIONAL_DEFAULT_PROPERTIES += persist.sys.strictmode.visual=0
 
 # Set adb usable on boot
 PRODUCT_DEFAULT_PROPERTY_OVERRIDES += \
-    ro.adb.secure=0 \
-    ro.debuggable=1
-
+    ro.zygote.disable_gl_preload=true
+# To allow adb during boot sequence
 ADDITIONAL_DEFAULT_PROPERTIES += ro.adb.secure=0
 ADDITIONAL_DEFAULT_PROPERTIES += ro.debuggable=1
 
