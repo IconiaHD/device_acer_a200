@@ -1,5 +1,4 @@
 # Release name
-# Release name
 PRODUCT_RELEASE_NAME := A200
 ROM_BUILDTYPE := IconiaHD
 

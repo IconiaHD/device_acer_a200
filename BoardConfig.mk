@@ -43,6 +43,7 @@ ARCH_ARM_HAVE_TLS_REGISTER := true
 
 ARCH_ARM_HIGH_OPTIMIZATION := true
 
+
 # Change to test tf101 config
 TARGET_OTA_ASSERT_DEVICE := picasso_e,a200
 
