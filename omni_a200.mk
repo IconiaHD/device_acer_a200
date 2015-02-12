@@ -13,9 +13,6 @@ $(call inherit-product, vendor/omni/config/common.mk)
 # Inherit device configuration
 $(call inherit-product, device/acer/a200/a200.mk)
 
-
-
-
 ## Device identifier. This must come after all inclusions
 PRODUCT_DEVICE       := a200
 PRODUCT_NAME         := omni_a200
@@ -35,4 +32,4 @@ PRODUCT_AAPT_PREF_CONFIG := mdpi
 
 
 # Bootanimation
-# PRODUCT_BOOTANIMATION := vendor/omni/prebuilt/bootanimation/bootanimation.zip
+ PRODUCT_BOOTANIMATION := vendor/omni/prebuilt/bootanimation/bootanimation.zip
