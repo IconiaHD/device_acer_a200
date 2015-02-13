@@ -43,8 +43,9 @@ PRODUCT_PACKAGES += \
     libwpa_client \
     hostapd \
     dhcpcd.conf \
-    wpa_supplicant \
-    wpa_supplicant.conf
+    wpa_supplicant 
+
+#    wpa_supplicant.conf
 
 # inherit proprietary files
 $(call inherit-product, build/target/product/full_base.mk)
@@ -124,8 +125,8 @@ PRODUCT_COPY_FILES += \
 # $(LOCAL_PATH)/prebuilt/bin/wpa_supplicant:system/bin/wpa_supplicant \
 
 PRODUCT_COPY_FILES += \
-   $(LOCAL_PATH)/prebuilt/etc/wifi/wpa_supplicant.conf:system/etc/wifi/wpa_supplicant.conf 
-  
+  $(LOCAL_PATH)/prebuilt/etc/wifi/wpa_supplicant.conf:system/etc/wifi/wpa_supplicant.conf 
+
 #    $(LOCAL_PATH)/prebuilt/etc/wifi/wpa_supplicant_overlay.conf:system/etc/wifi/wpa_supplicant_overlay.conf \
 #    $(LOCAL_PATH)/prebuilt/etc/wifi/p2p_supplicant_overlay.conf:system/etc/wifi/p2p_supplicant_overlay.conf 
 
